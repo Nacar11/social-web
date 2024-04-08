@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { SignupValidation } from "@/lib/vaidation";
+import { SignupValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -101,7 +101,7 @@ function SignupForm() {
             
           )}
         />
-        <Button type="submit" className="shad-button_ghost">Submit</Button>
+        <Button className="bg-red" variant="outline">Button</Button>
       </form>
       </div>
     </Form>
