@@ -1,8 +1,7 @@
-import React from 'react'
-
+import { Button } from "@/components/ui/button";
 function SignupForm() {
   return (
-    <div>SignupForm</div>
+    <div><Button>asdasdas</Button></div>
   )
 }
 
