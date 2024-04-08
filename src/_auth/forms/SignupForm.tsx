@@ -101,7 +101,7 @@ function SignupForm() {
             
           )}
         />
-        <Button className="bg-red" variant="outline">Button</Button>
+        <Button className="shad-button_primary"> Button</Button>
       </form>
       </div>
     </Form>
