@@ -1,7 +1,11 @@
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 function SignupForm() {
   return (
-    <div><Button>asdasdas</Button></div>
+    <div>
+      <h1 className="underline">
+asdasdas
+      </h1>
+    </div>
   )
 }
 
