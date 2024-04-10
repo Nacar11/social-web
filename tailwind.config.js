@@ -19,11 +19,10 @@ module.exports = {
     },
     extend: {
       colors: {
-        "primary-500": "#877EFF",
+        "primary-500": "#CC126C",
         "primary-600": "#5D5FEF",
         "secondary-500": "#FFB620",
         "off-white": "#D0DFFF",
-        red: "#FF5A5A",
         "dark-1": "#000000",
         "dark-2": "#09090A",
         "dark-3": "#101012",
@@ -41,7 +40,7 @@ module.exports = {
         465: "465px",
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
+        poppins: ["Poppins", "sans-serif"],
       },
       keyframes: {
         "accordion-down": {
