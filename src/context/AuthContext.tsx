@@ -67,11 +67,12 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   };
 
   useEffect(() => {
-    // cookieFallback === null ||
-      // cookieFallback === undefined
+   
     const cookieFallback = localStorage.getItem("cookieFallback");
     if (
-      cookieFallback === "[]"
+      cookieFallback === "[]" ||
+      cookieFallback === null ||
+      cookieFallback === undefined
       
     ) {
       navigate("/sign-in");
