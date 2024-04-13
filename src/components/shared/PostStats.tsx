@@ -3,6 +3,7 @@ import { checkIsLiked } from "@/lib/utils";
 import { BookmarksSimple, Heart } from "@phosphor-icons/react";
 import { Models } from "appwrite";
 import React, { useEffect, useState } from "react";
+import Loader from "./Loader";
 
 type PostStatsProps = {
     post: Models.Document;
@@ -16,8 +17,8 @@ const PostStats = ({post, userId}: PostStatsProps) => {
     const [isSaved, setIsSaved] = useState(false);
 
     const { mutate: likePost } = useLikePost();
-    const { mutate: savePost } = useSavePost();
-    const { mutate: deleteSavedPost } = useDeleteSavedPost();
+    const { mutate: savePost, isPending: isSavingPost } = useSavePost();
+    const { mutate: deleteSavedPost, isPending: isDeletingSaved } = useDeleteSavedPost();
 
     const { data: currentUser } = useGetCurrentUser();
 
@@ -65,24 +66,25 @@ const PostStats = ({post, userId}: PostStatsProps) => {
                             (<Heart weight="fill" color="#ff0000" className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
                             :
                             (<Heart className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
-                            
                         }
-
                         </div>
                         <p className="small-medium lg:base-medium">
                             {likes.length}
                         </p>
                 </div>
                 <div className="flex items-center gap-2 mr-5">
-                    <div onClick={handleSavePost} className="cursor-pointer">
-                         {
-                            isSaved ?
-                            (<BookmarksSimple weight="fill" color="#5D5FEF" className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
-                            :
-                            (<BookmarksSimple className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
-                            
+                    {isSavingPost || isDeletingSaved ? 
+                        <Loader/> 
+                        : 
+                        <div onClick={handleSavePost} className="cursor-pointer">
+                            {
+                                isSaved ?
+                                (<BookmarksSimple weight="fill" color="#5D5FEF" className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
+                                :
+                                (<BookmarksSimple className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
+                            }
+                            </div>
                         }
-                        </div>
                 </div>
             </div>
         )
