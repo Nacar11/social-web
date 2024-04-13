@@ -1,6 +1,7 @@
 import { useUserContext } from '@/context/AuthContext';
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
-import React, { useEffect } from 'react';
+import { SignOut } from "@phosphor-icons/react";
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 
@@ -23,7 +24,7 @@ const TopBar = () => {
         </Link>
         <div className="flex gap-4">
           <Button variant="ghost" className="shad-button_ghost" onClick={() => signOut()}>
-           <i className="ri-logout-circle-r-line pl-1 text-3xl text-primary" />
+           <SignOut size={32} />
           </Button>
           <Link to={`/profile/${user.id}`} className="flex-center gap-3">
             <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'} 

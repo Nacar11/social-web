@@ -1,5 +1,4 @@
 import { ID, Query } from "appwrite";
-import { errorUtil } from "node_modules/zod/lib/helpers/errorUtil";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 import { INewPost, INewUser } from "./types";
 
@@ -111,7 +110,7 @@ export async function createPost(post: INewPost){
        // SAVE POST TO DATABASE
        const newPost = await databases.createDocument(
             appwriteConfig.databaseId,
-            appwriteConfig.postsCollectionId,
+            appwriteConfig.postCollectionId,
             ID.unique(),
             {
                 creator: post.userId,
@@ -172,4 +171,72 @@ export async function deleteFile(fileId: string){
     }catch(e){
         console.log(e);
     }
+}
+
+export async function getRecentPosts() {
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      [Query.orderDesc("$createdAt"), Query.limit(20)]
+    );
+
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function likePost(postId: string, likesArray: string[]) {
+  try {
+    const updatedPost = await databases.updateDocument(
+         appwriteConfig.databaseId,
+         appwriteConfig.postCollectionId,
+         postId,
+         {
+            likes: likesArray
+         }
+    );
+    if (!updatedPost) throw Error;
+    return updatedPost;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function savePost(postId: string, userId: string) {
+  try {
+    const updatedPost = await databases.createDocument(
+         appwriteConfig.databaseId,
+         appwriteConfig.saveCollectionId,
+         ID.unique(),
+         {
+            user: userId,
+            post: postId
+         }
+    );
+    if (!updatedPost) throw Error;
+    return updatedPost;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteSavedPost(savedRecordId: string) {
+  try {
+    const statusCode = await databases.deleteDocument(
+         appwriteConfig.databaseId,
+         appwriteConfig.saveCollectionId,
+         savedRecordId
+    );
+    if (!statusCode) throw Error;
+    return {status: 'success'};
+
+  } catch (error) {
+    console.log(error);
+  }
 }

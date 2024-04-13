@@ -2,10 +2,10 @@ import { sidebarLinks } from '@/constants';
 import { useUserContext } from '@/context/AuthContext';
 import { INavLink } from '@/lib/appwrite/types';
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
+import { SignOut } from "@phosphor-icons/react";
 import { useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
-
 
 export const LeftSideBar = () => {
   const { pathname } = useLocation();
@@ -61,7 +61,7 @@ export const LeftSideBar = () => {
         </ul>
       </div>
       <Button variant="ghost" className="shad-button_ghost" onClick={() => signOut()}>
-        <i className="ri-logout-circle-r-line pl-1 text-3xl text-primary" />
+        <SignOut size={32} />
         <p className="small-medium lg:base-medium">
           Logout
         </p>
