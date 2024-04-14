@@ -22,7 +22,7 @@ import { z } from "zod";
 function SigninForm() {
   const { toast } = useToast()
 
-  const { checkAuthUser, isLoading: isUserLoading} = useUserContext();
+  const { checkAuthUser} = useUserContext();
   const { mutateAsync: signInAccount, isPending} = useSignInAccount();
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof SigninValidation>>({
@@ -102,7 +102,7 @@ function SigninForm() {
         />
 
         
-  {isUserLoading ? <LoadingButton></LoadingButton> : (
+  {isPending ? <LoadingButton></LoadingButton> : (
    <Button type="submit" className="shad-button_primary">Sign In</Button>
 )}
 
