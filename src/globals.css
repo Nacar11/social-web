@@ -125,7 +125,7 @@
 
   /* Explore */
   .explore-container {
-    @apply flex flex-col flex-1 items-center overflow-scroll py-10 px-5 md: p-14 custom-scrollbar;
+    @apply flex flex-col flex-1 items-center overflow-scroll py-10 px-5 md:p-14 custom-scrollbar;
   }
 
   .explore-inner_container {
@@ -146,12 +146,12 @@
   }
 
   .home-creators {
-    @apply hidden xl: flex flex-col w-72 2xl:w-465 px-6 py-10 gap-10 overflow-scroll custom-scrollbar;
+    @apply hidden xl:flex flex-col w-72 2xl:w-465 px-6 py-10 gap-10 overflow-scroll custom-scrollbar;
   }
 
   /* Post Details */
   .post_details-container {
-    @apply flex flex-col flex-1 gap-10 overflow-scroll py-10 px-5 md: p-14 custom-scrollbar items-center;
+    @apply flex flex-col flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar items-center;
   }
 
   .post_details-card {
@@ -159,7 +159,7 @@
   }
 
   .post_details-img {
-    @apply h-80 lg: h-[480px] xl:w-[48%] rounded-t-[30px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-dark-1;
+    @apply h-80 lg:h-[480px] xl:w-[48%] rounded-t-[30px] xl:rounded-l-[24px] xl:rounded-tr-none object-cover p-5 bg-dark-1;
   }
 
   .post_details-info {
