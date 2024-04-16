@@ -6,6 +6,11 @@ export const SignupValidation = z.object({
   username: z.string().min(5, {message: "Username too short"}),
   email: z.string().email(),
   password: z.string().min(8, {message: "Password must be at least 8 characters"}),
+  reenter_password: z.string().min(8, { message: "Password must be at least 8 characters" })
+    .refine((reenterPassword, data) => reenterPassword === data.password, {
+      message: "Passwords do not match",
+      path: ["reenter_password"]
+    })
 })
 
 export const SigninValidation = z.object({

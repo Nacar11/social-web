@@ -9,8 +9,7 @@ const  AuthLayout = () => {
     ):
     (
       <>
-      <section className="flex flex-1 justify-center items-center flex-col py-10">
-        
+      <section className="w-full h-screen flex-center flex-1 flex-col">
         <Outlet/>
       </section>
 

@@ -35,6 +35,7 @@ function SignupForm() {
       username: "",
       email: "",
       password: "",
+      reenter_password: "",
     },
   })
  
@@ -81,44 +82,47 @@ function SignupForm() {
    
   }
   return (
+    <div className="w-800 md:w-[700px] md:flex flex-col">
    <Form {...form}>
-    <div className="sm:w-420 flex-center flex-col">
-      <div className="flex items-center justify-center gap-2">
-      <img className="w-80 h-50" src="/assets/images/logo_complete.png"/>
+    <div className="md:rounded-lg md:shadow-lg p-12 m-12">
+      <div className="flex items-center justify-center">
+      <img className="w-60 h-50" src="/assets/images/logo_complete.png"/>
     </div>
 
-    <h2 className="h3-bold md:h2-bold sm:pt-12"> Create New Account</h2>
-    <p className="text-light-3 small-medium md:base-regular">To use Social, please enter your details</p>
-
-    
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
+    <h2 className="h3-bold md:h2-bold sm:pt-12">Create New Account</h2>
+    <p className="small-medium md:base-regular py-2 md:mb-5">To access Social, please register your details</p>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full">
         <div className="flex items-center gap-4">
          <FormField
           control={form.control}
           name="first_name"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>First Name</FormLabel>
+            <FormItem>
               <FormControl>
-                <Input type="text" className="shad-input px-3" {...field} />
+                <Input 
+                type="text" 
+                className="shad-input" 
+                placeholder="First Name" 
+                {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
-            
           )}
         />
          <FormField
           control={form.control}
           name="last_name"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Last Name</FormLabel>
+            <FormItem>
               <FormControl>
-                <Input type="text" className="shad-input px-3" {...field} />
+                <Input 
+                type="text" 
+                className="shad-input"
+                placeholder="Last Name"
+                {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
-            
           )}
         />
         </div>
@@ -126,10 +130,13 @@ function SignupForm() {
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Username</FormLabel>
+            <FormItem>
               <FormControl>
-                <Input type="text" className="shad-input px-3" {...field} />
+                <Input 
+                type="text"
+                className="shad-input"
+                placeholder="Username" 
+                {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -140,10 +147,13 @@ function SignupForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Email</FormLabel>
+            <FormItem>
               <FormControl>
-                <Input type="text" className="shad-input px-3" {...field} />
+                 <Input 
+                type="email"
+                className="shad-input"
+                placeholder="Email" 
+                {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -155,7 +165,19 @@ function SignupForm() {
           name="password"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input type="password" className="shad-input px-3" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+            
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="reenter_password"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
               <FormControl>
                 <Input type="password" className="shad-input px-3" {...field} />
               </FormControl>
@@ -176,6 +198,7 @@ function SignupForm() {
       </form>
       </div>
     </Form>
+    </div>
   )
 }
 
