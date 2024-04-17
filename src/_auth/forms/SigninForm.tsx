@@ -5,35 +5,34 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
 import { useSignInAccount } from "@/lib/react-query/queriesAndMutations";
-import { SigninValidation } from "@/lib/validation";
+import { SignInValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from "zod";
 
 
-function SigninForm() {
+function SignInForm() {
   const { toast } = useToast()
 
   const { checkAuthUser} = useUserContext();
   const { mutateAsync: signInAccount, isPending} = useSignInAccount();
   const navigate = useNavigate();
-  const form = useForm<z.infer<typeof SigninValidation>>({
-    resolver: zodResolver(SigninValidation),
+  const form = useForm<z.infer<typeof SignInValidation>>({
+    resolver: zodResolver(SignInValidation),
     defaultValues: {
       email: "",
       password: "",
     },
   })
  
-  async function onSubmit(values: z.infer<typeof SigninValidation>) {
+  async function onSubmit(values: z.infer<typeof SignInValidation>) {
     const session = await signInAccount({
       email: values.email,
       password: values.password
@@ -126,5 +125,4 @@ function SigninForm() {
     </div>
   )
 }
-
-export default SigninForm
+export default SignInForm

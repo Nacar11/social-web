@@ -5,81 +5,72 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
-import { SignupValidation } from "@/lib/validation";
+import { SignUpValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from "zod";
 
-
-function SignupForm() {
+function SignUpForm() {
   const { toast } = useToast()
   const { checkAuthUser} = useUserContext();
   const navigate = useNavigate();
-
   const { mutateAsync: createUserAccount, isPending: isCreatingAccount} = useCreateUserAccount();
   const { mutateAsync: signInAccount} = useSignInAccount();
-
-  const form = useForm<z.infer<typeof SignupValidation>>({
-    resolver: zodResolver(SignupValidation),
+  const form = useForm<z.infer<typeof SignUpValidation>>({
+    resolver: zodResolver(SignUpValidation),
     defaultValues: {
       first_name: "",
       last_name: "",
       username: "",
       email: "",
       password: "",
-      reenter_password: "",
+      confirm_password: "",
     },
   })
- 
-  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+  async function onSubmit(values: z.infer<typeof SignUpValidation>) {
    const updatedValues = 
    { name: `${values.first_name} ${values.last_name}`,
      username: values.username,
      email: values.email,
      password: values.password,
     };
-    
    const newUser = await createUserAccount(updatedValues);
    
-   if(!newUser) {
+  //  console.log(typeof(newUser))
+   if(newUser && newUser.Error) {
     toast({
           title: "Sign Up Failed, Please Try Again.",
+          description: `${newUser.Error}`
         })
+        return
       }
-      console.log(newUser);
-    const session = await signInAccount({
-      email: values.email,
-      password: values.password
-    })
+    // const session = await signInAccount({
+    //   email: values.email,
+    //   password: values.password
+    // })
 
-    if(!session){
-      toast({
-          title: "Sign In Failed, Please Try Again.",
-        })
-    }
-    const isLoggedIn = await checkAuthUser();
-
-    if(isLoggedIn){
-      form.reset();
-      navigate('/');
-    }
-    else{
-      return toast({
-        title: "Sign Up Failed, Please Try Again.",
-      })
-    }
-   
-
-
-   
+    // if(!session){
+    //   toast({
+    //       title: "Sign In Failed, Please Try Again.",
+    //     })
+    // }
+    // const isLoggedIn = await checkAuthUser();
+    // if(isLoggedIn){
+    //   form.reset();
+    //   navigate('/');
+    // }
+    // else{
+    //   return toast({
+    //     title: "Sign Up Failed, Please Try Again.",
+    //   })
+    // }
   }
   return (
     <div className="w-800 md:w-[700px] md:flex flex-col">
@@ -166,7 +157,11 @@ function SignupForm() {
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormControl>
-                <Input type="password" className="shad-input px-3" {...field} />
+                <Input 
+                type="password" 
+                className="shad-input"
+                placeholder="Password" 
+                {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -175,26 +170,27 @@ function SignupForm() {
         />
          <FormField
           control={form.control}
-          name="reenter_password"
+          name="confirm_password"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormControl>
-                <Input type="password" className="shad-input px-3" {...field} />
+                <Input 
+                type="password" 
+                className="shad-input"
+                placeholder="Confirm Password" 
+                {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
             
           )}
         />
-
-        
   {isCreatingAccount ? <LoadingButton></LoadingButton> : (
    <Button type="submit" className="shad-button_primary">Sign Up</Button>
-)}
-
-<p className="text-small-regular text-light-2 text-center mt-2">Already have an account?
-<Link to="/sign-in" className="text-primary-500 text-small-semibold ml-1">Log in</Link>
-</p>
+    )}
+  <p className="small-regular text-center mt-2">Already have an account?
+    <Link to="/sign-in" className="text-primary-500 small-medium md:small-semibold ml-1 base-semibold">Log in</Link>
+  </p>
       </form>
       </div>
     </Form>
@@ -202,4 +198,4 @@ function SignupForm() {
   )
 }
 
-export default SignupForm
+export default SignUpForm
