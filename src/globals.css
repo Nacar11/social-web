@@ -219,7 +219,7 @@
 
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
+    @apply hidden text-black md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-light-2;
   }
 
   .leftsidebar-link {
@@ -272,14 +272,24 @@
   }
 
   .shad-button_white {
-      @apply w-full text-[#060606] my-2 bg-light-1 hover:bg-light-2 border border-black rounded-md p-4 text-center flex items-center justify-center !important; 
+      @apply w-full text-[#000000] bg-light-1 hover:bg-light-2 border border-black rounded-md p-4 text-center flex items-center justify-center !important; 
     }
 
   .shad-button_dark_4 {
-    @apply h-12 bg-dark-4 px-5 text-light-1 flex gap-2 !important;
+    @apply w-full bg-dark-4 p-4 text-light-1 flex gap-2 !important;
   }
 
-  .shad-button_ghost {
-    @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
+  /* Card */
+  .shad-button_primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-light-1 flex gap-2 !important;
   }
+    
+  .shad-button_white {
+   @apply w-full text-[#000000] bg-light-1 hover:bg-light-2 border border-black rounded-md p-4 text-center flex items-center justify-center !important;
+  }
+    
+  .shad-button_dark_4 {
+  @apply w-full bg-dark-4 p-4 text-light-1 flex gap-2 !important;
+  }
+
 }

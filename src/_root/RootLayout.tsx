@@ -1,12 +1,15 @@
 import BottomBar from "@/components/shared/BottomBar";
 import { LeftSideBar } from "@/components/shared/LeftSideBar";
 import TopBar from "@/components/shared/TopBar";
+import { useUserContext } from '@/context/AuthContext';
 import { Outlet } from 'react-router-dom';
+
 const RootLayout = () => {
-  return (
+    const { isEmailVerified } = useUserContext();  
+    return (
    <div className="w-full md:flex">
     <TopBar/>
-    <LeftSideBar/>
+    <LeftSideBar disableNavigation={!isEmailVerified} />
     <section className="flex flex-1 h-full">
       <Outlet/>
     </section>

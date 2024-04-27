@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getCurrentUser } from "@/lib/appwrite/api";
+import { getCurrentUser, getCurrentUserAuth } from "@/lib/appwrite/api";
 import { IUser } from "@/lib/appwrite/types";
 
 export const INITIAL_USER = {
@@ -17,9 +17,11 @@ const INITIAL_STATE = {
   user: INITIAL_USER,
   isLoading: false,
   isAuthenticated: false,
+  isEmailVerified: false,
   setUser: () => {},
   setIsAuthenticated: () => {},
-  checkAuthUser: async () => false as boolean,
+  checkUser: async () => false as boolean,
+  checkAuthUserEmailVerification: async () => false as boolean,
 };
 
 type IContextType = {
@@ -28,7 +30,9 @@ type IContextType = {
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  checkAuthUser: () => Promise<boolean>;
+  checkUser: () => Promise<boolean>;
+  checkAuthUserEmailVerification: () => Promise<boolean>;
+  isEmailVerified: boolean; 
 };
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
@@ -38,8 +42,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
-  const checkAuthUser = async () => {
+  const checkUser = async () => {
     setIsLoading(true);
     try {
       const currentAccount = await getCurrentUser();
@@ -53,7 +58,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
           bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
-
         return true;
       }
 
@@ -66,8 +70,26 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }
   };
 
+    const checkAuthUserEmailVerification = async () => {
+    setIsLoading(true);
+    try {
+      const currentUserAuth = await getCurrentUserAuth();
+      if (currentUserAuth?.emailVerification) {
+        setIsEmailVerified(true);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error(error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-   
+    checkUser();
+    checkAuthUserEmailVerification();
     const cookieFallback = localStorage.getItem("cookieFallback");
     if (
       cookieFallback === "[]" ||
@@ -75,10 +97,16 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       cookieFallback === undefined
       
     ) {
-      navigate("/sign-in");
+        navigate("/sign-in");
     }
-
-    checkAuthUser();
+    else{
+      if(isEmailVerified == true){
+        navigate("/");
+      }
+      else if(isEmailVerified == false) {
+        navigate("/email-verification");
+      }
+     }
   }, []);
 
   const value = {
@@ -87,10 +115,13 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     isLoading,
     isAuthenticated,
     setIsAuthenticated,
-    checkAuthUser,
+    checkUser,
+    isEmailVerified,
+    checkAuthUserEmailVerification
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export const useUserContext = () => useContext(AuthContext);
+

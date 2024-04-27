@@ -21,7 +21,8 @@ import { z } from "zod";
 function SignInForm() {
   const { toast } = useToast()
 
-  const { checkAuthUser} = useUserContext();
+  const { checkUser: checkUser} = useUserContext();
+  const { checkAuthUserEmailVerification: checkAuthUserEmailVerification} = useUserContext();
   const { mutateAsync: signInAccount, isPending} = useSignInAccount();
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof SignInValidation>>({
@@ -43,11 +44,16 @@ function SignInForm() {
           title: "Sign In Failed, Please Try Again.",
         })
     }
-    const isLoggedIn = await checkAuthUser();
-
+    const isLoggedIn = await checkUser();
+    const isEmailVerified = await checkAuthUserEmailVerification();
     if(isLoggedIn){
       form.reset();
-      navigate('/');
+      if(isEmailVerified){
+        navigate('/');
+      }
+      else{
+        navigate('/email-verification')
+      }
     }
     else{
       return toast({

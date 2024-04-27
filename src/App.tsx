@@ -6,6 +6,7 @@ import SignUpForm from './_auth/forms/SignupForm';
 import RootLayout from './_root/RootLayout';
 import { AllUsers, CreatePost, EditPost, Explore, Home, LikedPosts, PostDetails, Profile, Saved, UpdateProfile } from './_root/pages/index';
  
+import EmailVerification from "./_root/pages/EmailVerification";
 import './globals.css';
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
     <Route element ={<RootLayout/>}>
     <Route index element={<Home/>}/>
     <Route path="/explore" element={<Explore/>}/>
+    <Route path="/email-verification" element={<EmailVerification/>}/>
     <Route path="/saved" element={<Saved/>}/>
     <Route path="/all-users" element={<AllUsers/>}/>
     <Route path="/create-post" element={<CreatePost/>}/>

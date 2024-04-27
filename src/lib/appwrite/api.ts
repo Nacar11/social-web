@@ -8,7 +8,6 @@ export async function createUserAccount(user: INewUser){
 
        const existingUser = await getUserByUsername(user.username);
         if (existingUser.total !== 0) {
-            console.log(existingUser)
             throw new Error("Username is already taken");
         }
         const newAccount = await account.create(
@@ -28,7 +27,6 @@ export async function createUserAccount(user: INewUser){
     return newUser;
     }
     catch (error) {
-        console.error(error);
         const errorMessage = error instanceof Error ? error.message : "Unexpected error occurred";
         if (typeof errorMessage === "string" && errorMessage.includes("email")) {
         return { Error: "Email already been used" };
@@ -104,6 +102,17 @@ export async function getCurrentUser(){
         if(!currentUser) throw Error;
 
         return currentUser.documents[0];
+    }catch(e){
+        console.log(e);
+    }
+}
+
+export async function getCurrentUserAuth(){
+    try {
+        const currentAccount = await account.get();
+        if(!currentAccount) throw Error
+        return currentAccount
+
     }catch(e){
         console.log(e);
     }
@@ -379,3 +388,17 @@ export async function searchPosts(searchTerm: string){
     console.log(error);
   }
 }
+
+export async function emailVerification(){
+  try {
+    const token = account.createVerification('http://localhost:5173/');
+    console.log(token);
+    if(!token) throw Error;
+
+    return token;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
