@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
-import { emailVerification } from "@/lib/appwrite/api";
+import { sendEmailVerification } from "@/lib/appwrite/api";
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { SignUpValidation } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -65,7 +65,7 @@ function SignUpForm() {
     const isLoggedIn = await checkAuthUser();
     if(isLoggedIn){
       form.reset();
-      const token = await emailVerification()
+      const token = await sendEmailVerification()
       console.log(token)
       navigate('/email-verification');
     }

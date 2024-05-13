@@ -5,7 +5,6 @@ import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations';
 import { SignOut } from "@phosphor-icons/react";
 import { useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '../ui/button';
 
 export const LeftSideBar = ({ disableNavigation }: { disableNavigation: boolean }) => {
   const { pathname } = useLocation();

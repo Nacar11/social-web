@@ -11,6 +11,7 @@ import {
     likePost,
     savePost,
     searchPosts,
+    sendEmailVerification,
     signInAccount,
     signOutAccount,
     updatePost
@@ -18,6 +19,11 @@ import {
 import { INewPost, INewUser, IUpdatePost } from '../appwrite/types';
 import { QUERY_KEYS } from './queryKeys';
 
+export const useSendEmailVerification = () => {
+return useMutation({
+    mutationFn: sendEmailVerification
+})
+}
 
 export const useCreateUserAccount = () => {
 return useMutation({

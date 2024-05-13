@@ -1,3 +1,4 @@
+import { urlLink } from "@/constants";
 import { ID, Query } from "appwrite";
 import { account, appwriteConfig, avatars, databases, storage } from "./config";
 import { INewPost, INewUser, IUpdatePost } from "./types";
@@ -389,9 +390,9 @@ export async function searchPosts(searchTerm: string){
   }
 }
 
-export async function emailVerification(){
+export async function sendEmailVerification(){
   try {
-    const token = account.createVerification('http://localhost:5173/');
+    const token = account.createVerification(urlLink);
     console.log(token);
     if(!token) throw Error;
 

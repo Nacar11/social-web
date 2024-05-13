@@ -48,3 +48,5 @@ export const bottombarLinks = [
     label: "Create",
   },
 ];
+
+export const urlLink = 'http://localhost:5173/';
