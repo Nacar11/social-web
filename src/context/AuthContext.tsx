@@ -75,7 +75,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     setIsLoading(true);
     try {
       const currentUserAuth = await getCurrentUserAuth();
-      console.log(currentUserAuth)
       if (currentUserAuth?.emailVerification) {
         setIsEmailVerified(true);
         return true;
@@ -101,9 +100,6 @@ useEffect(() => {
         const isValidVerificationEndpoint =
             window.location.pathname === "/email-verification" && userId;
 
-        console.log(window.location.pathname);
-        console.log(isEmailVerified);
-        console.log(isAuthenticated);
        
         const cookieFallback = localStorage.getItem("cookieFallback");
         if (

@@ -19,21 +19,25 @@ type EmailVerificationConfirmProps = {
 const EmailVerificationConfirm = ({ isOpen, onOpenChange, userId, secret }: EmailVerificationConfirmProps) => {
     const { mutateAsync: emailVerificationConfirm, isPending } = useEmailVerificationConfirm();
     const { user } = useUserContext();
-    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
 
-     useEffect(() => {
-       const emailConfirm = async () => {
-        
-       const session = await emailVerificationConfirm({
+    useEffect(() => {
+      if (isOpen) {
+      const emailConfirm = async () => {
+        const session = await emailVerificationConfirm({
           userId: userId,
           secret: secret
-        })
-        console.log(session)
-      }
-      
-      emailConfirm()
-      
-    }, []);
+        });
+
+        if(session == 'error'){
+          setIsError(true)
+        }
+
+      };
+
+    emailConfirm();
+  }
+}, [isOpen]);
      return (
   <Dialog open={isOpen} onOpenChange={onOpenChange}>
     <DialogTrigger asChild>
@@ -48,10 +52,15 @@ const EmailVerificationConfirm = ({ isOpen, onOpenChange, userId, secret }: Emai
           :
           (
         <DialogHeader>
-          <DialogTitle>{userId}</DialogTitle>
+          <DialogTitle>{isError ? 'Error' : 'Success'}</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
+            {
+              isError ? 
+              'Verification link is expired, request another verification link to your email.' 
+              : 
+              'Your account is now fully verified, you can use Social to its full extend.'
+            }
+            
           </DialogDescription>
         </DialogHeader>
         )}

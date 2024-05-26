@@ -415,6 +415,7 @@ export async function emailVerificationConfirm(credentials: {userId: string; sec
     
   } catch (error) {
     console.log(error);
+    return 'error'
   }
 }
 
