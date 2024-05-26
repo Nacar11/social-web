@@ -49,4 +49,4 @@ export const bottombarLinks = [
   },
 ];
 
-export const urlLink = 'http://localhost:5173/';
+export const urlLink = 'http://localhost:5173/email-verification';

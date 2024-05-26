@@ -4,9 +4,20 @@ import AuthLayout from './_auth/AuthLayout';
 import SignInForm from './_auth/forms/SigninForm';
 import SignUpForm from './_auth/forms/SignupForm';
 import RootLayout from './_root/RootLayout';
-import { AllUsers, CreatePost, EditPost, Explore, Home, LikedPosts, PostDetails, Profile, Saved, UpdateProfile } from './_root/pages/index';
+import {
+  AllUsers,
+  CreatePost,
+  EditPost,
+  EmailVerification,
+  Explore,
+  Home,
+  LikedPosts,
+  PostDetails,
+  Profile,
+  Saved,
+  UpdateProfile
+} from './_root/pages/index';
  
-import EmailVerification from "./_root/pages/EmailVerification";
 import './globals.css';
 const App = () => {
   return (

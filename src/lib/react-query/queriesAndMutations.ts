@@ -4,6 +4,7 @@ import {
     createUserAccount,
     deletePost,
     deleteSavedPost,
+    emailVerificationConfirm,
     getCurrentUser,
     getInfinitePosts,
     getPostById,
@@ -22,6 +23,12 @@ import { QUERY_KEYS } from './queryKeys';
 export const useSendEmailVerification = () => {
 return useMutation({
     mutationFn: sendEmailVerification
+})
+}
+
+export const useEmailVerificationConfirm = () => {
+return useMutation({
+    mutationFn: (credentials: {userId: string; secret: string;}) => emailVerificationConfirm(credentials)
 })
 }
 

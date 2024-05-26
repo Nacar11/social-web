@@ -32,7 +32,8 @@ type IContextType = {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkUser: () => Promise<boolean>;
   checkAuthUserEmailVerification: () => Promise<boolean>;
-  isEmailVerified: boolean; 
+  isEmailVerified: boolean;
+
 };
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
@@ -74,6 +75,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     setIsLoading(true);
     try {
       const currentUserAuth = await getCurrentUserAuth();
+      console.log(currentUserAuth)
       if (currentUserAuth?.emailVerification) {
         setIsEmailVerified(true);
         return true;
@@ -87,27 +89,43 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }
   };
 
-  useEffect(() => {
-    checkUser();
-    checkAuthUserEmailVerification();
-    const cookieFallback = localStorage.getItem("cookieFallback");
-    if (
-      cookieFallback === "[]" ||
-      cookieFallback === null ||
-      cookieFallback === undefined
+useEffect(() => {
+    const fetchData = async () => {
+        setIsLoading(true)
+        await checkUser();
+        await checkAuthUserEmailVerification();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get("userId");
       
-    ) {
-        navigate("/sign-in");
-    }
-    else{
-      if(isEmailVerified == true){
-        navigate("/");
-      }
-      else if(isEmailVerified == false) {
-        navigate("/email-verification");
-      }
-     }
-  }, []);
+        const isValidVerificationEndpoint =
+            window.location.pathname === "/email-verification" && userId;
+
+        console.log(window.location.pathname);
+        console.log(isEmailVerified);
+        console.log(isAuthenticated);
+       
+        const cookieFallback = localStorage.getItem("cookieFallback");
+        if (
+            cookieFallback === "[]" ||
+            cookieFallback === null ||
+            cookieFallback === undefined
+        ) {
+            navigate("/sign-in");
+        } else {
+            if (isEmailVerified && window.location.pathname === "/email-verification") {
+                navigate("/");
+            } else if (isEmailVerified && isValidVerificationEndpoint) {
+                navigate("/");
+            } else if (!isEmailVerified && !isValidVerificationEndpoint) {
+                navigate("/email-verification");
+            }  
+        }
+        setIsLoading(false)
+    };
+
+    fetchData();
+}, [isEmailVerified]);
 
   const value = {
     user,

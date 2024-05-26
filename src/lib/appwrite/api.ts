@@ -392,7 +392,22 @@ export async function searchPosts(searchTerm: string){
 
 export async function sendEmailVerification(){
   try {
-    const token = account.createVerification(urlLink);
+    const token = await account.createVerification(urlLink);
+    console.log(token);
+    if(!token) throw Error;
+
+    return token;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function emailVerificationConfirm(credentials: {userId: string; secret: string}){
+  try {
+    console.log(credentials.userId);
+    console.log(credentials.secret);
+    const token = await account.updateVerification(credentials.userId, credentials.secret);
     console.log(token);
     if(!token) throw Error;
 

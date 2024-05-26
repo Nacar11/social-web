@@ -16,11 +16,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from "zod";
-
-
 function SignInForm() {
   const { toast } = useToast()
-
   const { checkUser: checkUser} = useUserContext();
   const { checkAuthUserEmailVerification: checkAuthUserEmailVerification} = useUserContext();
   const { mutateAsync: signInAccount, isPending} = useSignInAccount();
@@ -38,10 +35,10 @@ function SignInForm() {
       email: values.email,
       password: values.password
     })
-
     if(!session){
       toast({
-          title: "Sign In Failed, Please Try Again.",
+          title: "Sign In Failed.",
+          description: "Invalid Username or Password",
         })
     }
     const isLoggedIn = await checkUser();
@@ -55,12 +52,6 @@ function SignInForm() {
         navigate('/email-verification')
       }
     }
-    else{
-      return toast({
-        title: "Sign Up Failed, Please Try Again.",
-      })
-    }
-   
   }
   return (
     <div className="w-800 md:w-[700px] md:flex flex-col">
