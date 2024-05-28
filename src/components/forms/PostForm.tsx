@@ -87,10 +87,10 @@ const PostForm = ({ post, action }: PostFormProps) => {
           control={form.control}
           name="caption"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel className="shad-form_label">Caption</FormLabel>
-              <FormControl>
-                <Textarea className="shad-textarea border border-black custom-scrollbar" placeholder="What's on your mind?" {...field} />
+            <FormItem className="flex flex-col ">
+              
+              <FormControl className="">
+                <Textarea className="shad-textarea border border-black custom-scrollbar" placeholder="Make a Caption! What's on your mind?" {...field} />
               </FormControl>
               <FormMessage className="shad-form_message"/>
             </FormItem>
@@ -142,11 +142,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
             </FormItem>
           )}
         />
-        <div className="flex gap-4 items-center justify-end">
-        <Button type="button" 
-        className="shad-button_dark_4">
-          Cancel
-            </Button>
+        <div className="flex-center">
             {isLoadingCreate || isLoadingUpdate ? 
             <LoadingButton>
               {isLoadingCreate && 'Creating'}
@@ -154,7 +150,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
             </LoadingButton> :
                 (  
                 <Button type="submit" 
-                className="shad-button_primary whitespace-nowrap">
+                className="shad-button_primary w-full">
                 {action} Post
                 </Button>)
 

@@ -46,7 +46,7 @@ export const LeftSideBar = ({ disableNavigation }: { disableNavigation: boolean 
           const isActive = pathname === link.route;
           return (
             <li key={link.label}
-            className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`}>
+            className={`leftsidebar-link group ${isActive && 'bg-primary-500 text-light-2'}`}>
                     <NavLink to={disableNavigation ? '/email-verification' : link.route}
                         className={`group-hover:invert-white flex gap-4 items-center p-4 ${disableNavigation && 'cursor-not-allowed'}`}>
                           <img

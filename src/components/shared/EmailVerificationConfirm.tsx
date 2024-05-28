@@ -21,7 +21,7 @@ type EmailVerificationConfirmProps = {
 const EmailVerificationConfirm = ({ isOpen, onOpenChange, userId, secret }: EmailVerificationConfirmProps) => {
     const { mutateAsync: emailVerificationConfirm, isPending } = useEmailVerificationConfirm();
     const { user } = useUserContext();
-     const navigate = useNavigate();
+    const navigate = useNavigate();
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
