@@ -90,7 +90,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
             <FormItem className="flex flex-col">
               <FormLabel className="shad-form_label">Caption</FormLabel>
               <FormControl>
-                <Textarea className="shad-textarea custom-scrollbar p-2" placeholder="What's on your mind?" {...field} />
+                <Textarea className="shad-textarea border border-black custom-scrollbar" placeholder="What's on your mind?" {...field} />
               </FormControl>
               <FormMessage className="shad-form_message"/>
             </FormItem>

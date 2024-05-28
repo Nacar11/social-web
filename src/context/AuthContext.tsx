@@ -91,8 +91,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 useEffect(() => {
     const fetchData = async () => {
         setIsLoading(true)
-        await checkUser();
         await checkAuthUserEmailVerification();
+        await checkUser();
+        
 
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get("userId");

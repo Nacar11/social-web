@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import { useUserContext } from "@/context/AuthContext";
 import { formatDateString } from "@/lib/utils";
 import { DotsThreeOutline } from "@phosphor-icons/react";
@@ -22,10 +23,10 @@ const PostCard = ({post}: PostCardProps) => {
                     <img
                     src={post?.creator?.imageUrl || '/assets/icons/profile-placeholder.svg'}
                     alt="creator"
-                    className="rounded-full w-12 lg:h-12" />
+                    className="rounded-full border-2 border-primary-500 w-12 lg:h-12" />
                 </Link>
                 <div className="flex flex-col">
-                    <p className="base-medium lg:body-bold text-light-1">
+                    <p className="base-medium lg:body-bold text-dark-2">
                         {post.creator.name}
                     </p>
                     <div className="flex-center gap-2 text-light-3">
@@ -41,11 +42,11 @@ const PostCard = ({post}: PostCardProps) => {
             </div>
             <Link to={`/update-post/${post.$id}`}
             className={`${user.id !== post.creator.$id && "hidden"}`}>
-                <DotsThreeOutline size={32} weight="fill" />
+                <DotsThreeOutline size={20} weight="fill" />
             </Link>
         </div>
         <Link to={`/posts/${post.$id}`}>
-            <div className="small-medium lg:base-medium py-5">
+            <div className="pl-2 small-medium lg:base-medium py-5">
                 <p>
                     {post.caption}
                 </p>
@@ -62,7 +63,8 @@ const PostCard = ({post}: PostCardProps) => {
             className="post-card_img"
             alt="post-image"/>
         </Link>
-        <PostStats post={post} userId={user.id}/>
+        <PostStats darkMode={false} post={post} userId={user.id}/>
+        <Separator className="mt-6 bg-gray-300"/>
     </div>
   )
 }

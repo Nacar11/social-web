@@ -8,9 +8,10 @@ import Loader from "./Loader";
 type PostStatsProps = {
     post?: Models.Document;
     userId: string;
+    darkMode: boolean;
 }
 
-const PostStats = ({post, userId}: PostStatsProps) => {
+const PostStats = ({post, userId, darkMode }: PostStatsProps) => {
     const likesList = post?.likes.map((user: Models.Document) => user.$id)
 
     const [likes, setLikes] = useState(likesList);
@@ -65,10 +66,10 @@ const PostStats = ({post, userId}: PostStatsProps) => {
                             checkIsLiked(likes, userId) ?
                             (<Heart weight="fill" color="#ff0000" className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
                             :
-                            (<Heart className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
+                            (<Heart color={darkMode ? "#FFFFFF" : "#09090A"} className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
                         }
                         </div>
-                        <p className="small-medium lg:base-medium">
+                        <p className={`small-medium lg:base-medium ${darkMode ? 'text-light-1' : 'text-dark-2'}`}>
                             {likes.length}
                         </p>
                 </div>
@@ -81,7 +82,7 @@ const PostStats = ({post, userId}: PostStatsProps) => {
                                 isSaved ?
                                 (<BookmarksSimple weight="fill" color="#5D5FEF" className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
                                 :
-                                (<BookmarksSimple className="w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
+                                (<BookmarksSimple color={darkMode ? "#FFFFFF" : "#09090A"} className=" w-[24px] h-[24px] md:w-[30px] md:h-[30px]"/>)
                             }
                             </div>
                         }

@@ -31,7 +31,7 @@ const GridPostList = ({posts, showUser = true, showStats = true}: GridPostListPr
                   alt="creator"
                   className="h-8 w-8 rounded-full"
                   />
-                  <p className="line-clamp-1">
+                  <p className="line-clamp-1 text-light-1">
                     {post.creator.name}
                   </p>
 
@@ -39,7 +39,7 @@ const GridPostList = ({posts, showUser = true, showStats = true}: GridPostListPr
               )
             }
             {
-              showStats && <PostStats post={post} userId={user.id}/>
+              showStats && <PostStats darkMode={true} post={post} userId={user.id}/>
             }
 
           </div>
