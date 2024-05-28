@@ -1,15 +1,6 @@
 import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
 import SearchResults from "@/components/shared/SearchResults";
-import { Input } from "@/components/ui/input";
-import useDebounce from "@/hooks/useDebounce";
-import { useGetPosts, useSearchPosts } from "@/lib/react-query/queriesAndMutations";
-import { FunnelSimple, MagnifyingGlass } from "@phosphor-icons/react";
-import { Loader2 } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import { useInView } from 'react-intersection-observer';
-
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +10,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import useDebounce from "@/hooks/useDebounce";
+import { useGetPosts, useSearchPosts } from "@/lib/react-query/queriesAndMutations";
+import { FunnelSimple, MagnifyingGlass } from "@phosphor-icons/react";
+import { Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useInView } from 'react-intersection-observer';
 
 const Explore = () => {
   const { ref, inView } = useInView();

@@ -248,6 +248,14 @@
   .user-card {
     @apply flex-center flex-col gap-4 border border-dark-4 rounded-[20px] px-5 py-8;
   }
+
+  .tag-close {
+    @apply h-1 w-1 bg-dark-2 text-light-2 ml-1 p-2 flex-center inline-flex rounded-full cursor-pointer;
+  }
+
+  .tags-input {
+    @apply flex-grow px-2 py-1 border-none outline-none;
+  }
 }
 
 @layer components {
@@ -263,7 +271,7 @@
   }
 
   .shad-input {
-    @apply h-12 w-full text-black py-4 my-4 bg-transparent border-b border-black outline-none focus:outline-none !important;
+    @apply h-12 w-full text-black py-4 my-4 bg-transparent border-b focus:outline-none border-black !important;
   }
 
   .shad-textarea {

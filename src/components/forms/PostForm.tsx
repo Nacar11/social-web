@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -13,6 +14,7 @@ import { useCreatePost, useUpdatePost } from "@/lib/react-query/queriesAndMutati
 import { PostValidation } from "@/lib/validation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Models } from "appwrite"
+import { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { z } from "zod"
@@ -32,7 +34,22 @@ const PostForm = ({ post, action }: PostFormProps) => {
     const { user } = useUserContext();
     const { toast } = useToast();
     const navigate = useNavigate();
+    const [tags, setTags] = useState<string[]>([]);
+    const [inputTag, setInputTag] = useState('');
 
+    const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key !== ' ') return;
+      e.preventDefault(); 
+      const inputElement = e.target as HTMLInputElement;
+      const value = inputElement.value.trim(); 
+      setTags([...tags, value]); 
+      setInputTag('');
+    };
+
+     const removeTag = (index: number) => {
+      setTags(tags.filter((el, i) => i !== index))
+     
+    };
 
     const form = useForm<z.infer<typeof PostValidation>>({
         resolver: zodResolver(PostValidation),
@@ -52,18 +69,13 @@ const PostForm = ({ post, action }: PostFormProps) => {
         imageId: post?.imageId,
         imageUrl: post?.imageUrl
       })
-
       if(!updatedPost){
         toast({
           title: 'Please Try Again'
         })
       }
-
       return navigate(`/posts/${post.$id}`)
-
     }
-
-
     const newPost = await createPost({
         ...values,
         userId: user.id
@@ -73,10 +85,7 @@ const PostForm = ({ post, action }: PostFormProps) => {
             title: 'Error Creating Post, Please Try Again'
         })
     }
-
     navigate('/');
-
-
   }
 
   return (
@@ -124,24 +133,33 @@ const PostForm = ({ post, action }: PostFormProps) => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="tags"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel className="shad-form_label">Add Tags (separated by comma " , ")</FormLabel>
-              <FormControl>
-                <Input type="text"
+            <div className="space-y-2 flex flex-col">
+              <div className="shad-form_label">
+                Add Your Hashtags   
+                <span className="text-primary-500 font-bold"> #</span>
+              </div>
+              <div className="gap-2 shad-input px-1 py-2 rounded-md border flex-center">
+                 { tags.map((tag, index) => (
+                  <div key={index}>
+                    <Badge className="small-regular" variant="outline">
+                      <span className="text-primary-500">#</span>{tag}
+                    <span className="tag-close" onClick={() => removeTag(index)}>&times;</span></Badge>
+                      
+                  </div>
+                ))}
+                <Input 
+                onKeyDown={(e) => addTag(e)}
+                type="text"
                 placeholder="Beauty, Aesthetics, Fashion" 
-                className="shad-input p-2"
-                 {...field}
+                className="tags-input"
+                value={inputTag}
+                onChange={(e) => setInputTag(e.target.value)}
                  >
                 </Input>
-              </FormControl>
-              <FormMessage className="shad-form_message"/>
-            </FormItem>
-          )}
-        />
+              </div>
+            </div>
+        
+      
         <div className="flex-center">
             {isLoadingCreate || isLoadingUpdate ? 
             <LoadingButton>
