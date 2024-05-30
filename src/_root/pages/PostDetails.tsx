@@ -30,10 +30,10 @@ const PostDetails = () => {
                     alt="creator"
                     className="rounded-full w-8 h-8 lg:w-12 lg:h-12" />
                     <div className="flex flex-col">
-                    <p className="base-medium lg:body-bold text-light-1">
+                    <p className="base-medium lg:body-bold text-dark-2">
                         {post?.creator.name}
                     </p>
-                     <div className="flex-center gap-2 text-light-3">
+                     <div className="flex-center gap-2 text-dark-4">
                         <p className="subtle-semibold lg:small-regular">
                             {formatDateString(post?.$createdAt || '')}
                         </p>
@@ -57,21 +57,24 @@ const PostDetails = () => {
                   </Button>
                 </div>
               </div>
-              <hr className="border w-full border-dark-4/80"/>
-                <div className="flex flex-col flex-1 w-full small-medium lg:base-regular">
+              <hr className="border w-full border-light-2"/>
+                <div className="flex flex-col flex-1 w-full base-regular lg:body-medium">
                 <p>
                     {post?.caption}
                 </p>
                 <ul className="flex gap-1 mt-2">
                     {post?.tags.map((tag:string) =>(
-                    <li key={tag} className="text-light-3">
-                        #{tag}
+                    <li key={tag} className="text-dark-3 small-regular lg:small-medium">
+                      <span className="text-primary-500 ">
+                        #
+                      </span>
+                        {tag}
                     </li>
                     ))}
                 </ul>
             </div>
             <div className="w-full">
-              <PostStats post={post} userId={user.id}/>
+              <PostStats darkMode={false} post={post} userId={user.id}/>
 
             </div>
           </div>

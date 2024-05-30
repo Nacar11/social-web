@@ -57,17 +57,18 @@ const PostForm = ({ post, action }: PostFormProps) => {
         caption: post ? post?.caption : "",
         file: [],
         location: post ? post?.location : "",
-        tags: post ? post.tags.join(',') : "",
         },
     })
- 
   async function onSubmit(values: z.infer<typeof PostValidation>) {
+    
     if(post && action ==='Update'){
+      
       const updatedPost = await updatePost({
         ...values, 
         postId: post.$id,
         imageId: post?.imageId,
-        imageUrl: post?.imageUrl
+        imageUrl: post?.imageUrl,
+        tags: tags
       })
       if(!updatedPost){
         toast({
@@ -78,7 +79,8 @@ const PostForm = ({ post, action }: PostFormProps) => {
     }
     const newPost = await createPost({
         ...values,
-        userId: user.id
+        userId: user.id,
+        tags: tags
     })
     if(!newPost){
         toast({
@@ -158,8 +160,6 @@ const PostForm = ({ post, action }: PostFormProps) => {
                 </Input>
               </div>
             </div>
-        
-      
         <div className="flex-center">
             {isLoadingCreate || isLoadingUpdate ? 
             <LoadingButton>
@@ -168,12 +168,12 @@ const PostForm = ({ post, action }: PostFormProps) => {
             </LoadingButton> :
                 (  
                 <Button type="submit" 
-                className="shad-button_primary w-full">
+                className="shad-button_primary w-full"
+               >
                 {action} Post
+                
                 </Button>)
-
             }
-      
         </div>
       </form>
     </Form>

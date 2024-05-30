@@ -1,10 +1,13 @@
 import Loader from '@/components/shared/Loader';
 import PostCard from '@/components/shared/PostCard';
+import { RightSideBar } from "@/components/shared/RightSideBar";
+import { useUserContext } from '@/context/AuthContext';
 import { useGetRecentPosts } from '@/lib/react-query/queriesAndMutations';
 import { Models } from 'appwrite';
 
 function Home() {
   const { data: posts, isPending: isPostsLoading } = useGetRecentPosts();
+  const { isEmailVerified, isLoading } = useUserContext();  
  
   return (
     <div className="flex flex-1">
@@ -23,12 +26,16 @@ function Home() {
             </li>
             )
              )}
-
           </ul>
           }
-          
         </div>
       </div>
+      {isEmailVerified ? (
+        <RightSideBar></RightSideBar>
+        )
+      :
+        <></>
+    }
     </div>
   )
 }

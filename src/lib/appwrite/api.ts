@@ -131,9 +131,7 @@ export async function createPost(post: INewPost){
         deleteFile(uploadedFile.$id);
         throw Error;
        }
-       // CONVERT TAGS INTO ARRAY
-       const tags = post.tags?.replace(/ /g, '').split(',') || [];
-
+       
        // SAVE POST TO DATABASE
        const newPost = await databases.createDocument(
             appwriteConfig.databaseId,
@@ -145,7 +143,7 @@ export async function createPost(post: INewPost){
                 imageUrl: fileUrl,
                 imageId: uploadedFile.$id,
                 location: post.location,
-                tags: tags
+                tags: post.tags || [],
                 
             },
        )
@@ -305,9 +303,6 @@ export async function updatePost(post: IUpdatePost){
         image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id}
       }
      
-       // CONVERT TAGS INTO ARRAY
-       const tags = post.tags?.replace(/ /g, '').split(',') || [];
-
        // SAVE POST TO DATABASE
        const updatedPost = await databases.updateDocument(
             appwriteConfig.databaseId,
@@ -318,7 +313,7 @@ export async function updatePost(post: IUpdatePost){
                 imageUrl: image.imageUrl,
                 imageId: image.imageId,
                 location: post.location,
-                tags: tags
+                tags: post.tags || [],
                 
             },
        )
@@ -416,6 +411,25 @@ export async function emailVerificationConfirm(credentials: {userId: string; sec
   } catch (error) {
     console.log(error);
     return 'error'
+  }
+}
+
+export async function getUsers() {
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+    );
+
+    if (!users) throw Error;
+
+     if (users.documents) {
+            users.documents.sort(() => Math.random() - 0.5);
+        }
+
+    return users;
+  } catch (error) {
+    console.log(error);
   }
 }
 

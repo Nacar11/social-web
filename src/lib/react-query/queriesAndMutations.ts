@@ -9,6 +9,7 @@ import {
     getInfinitePosts,
     getPostById,
     getRecentPosts,
+    getUsers,
     likePost,
     savePost,
     searchPosts,
@@ -198,3 +199,10 @@ export const useSearchPosts = (searchTerm: string) => {
 
     })
 }
+
+export const useGetUsers = () => {
+ return useQuery({
+        queryKey: [QUERY_KEYS.GET_USERS],
+        queryFn: getUsers
+    })
+};

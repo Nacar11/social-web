@@ -14,11 +14,11 @@ export type IUpdateUser = {
 };
 
 export type INewPost = {
-  userId: string;
-  caption: string;
-  file: File[];
-  location?: string;
-  tags?: string;
+    userId: string;
+    caption: string;
+    file: File[];
+    location?: string;
+    tags?: string[];
 };
 
 export type IUpdatePost = {
@@ -28,7 +28,7 @@ export type IUpdatePost = {
   imageUrl: URL;
   file: File[];
   location?: string;
-  tags?: string;
+  tags?: string[];
 };
 
 export type IUser = {

@@ -34,9 +34,14 @@ const EmailVerificationConfirm = ({ isOpen, onOpenChange, userId, secret }: Emai
 
         if(session == 'error'){
           setIsError(true)
+           setTimeout(() => {
+                        navigate('/email-verification');
+                    }, 5000);
         }
         else{
-          navigate('/')
+         setTimeout(() => {
+                        navigate('/');
+                    }, 5000);
         }
 
       };
