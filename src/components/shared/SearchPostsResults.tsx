@@ -1,12 +1,12 @@
 import { Loader2 } from "lucide-react";
 import GridPostList from "./GridPostList";
 
-type SearchResultsProps = {
+type SearchPostsResultsProps = {
 isSearchFetching: boolean;
 searchedPosts: any;
 }
 
-const SearchResults = ({isSearchFetching, searchedPosts}: SearchResultsProps) => {
+const SearchPostsResults = ({isSearchFetching, searchedPosts}: SearchPostsResultsProps) => {
     if(isSearchFetching) 
     return (
           <section className="text-center h-[400px] w-full flex-center">
@@ -33,4 +33,4 @@ const SearchResults = ({isSearchFetching, searchedPosts}: SearchResultsProps) =>
   
 }
 
-export default SearchResults
+export default SearchPostsResults

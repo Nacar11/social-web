@@ -1,6 +1,6 @@
 import GridPostList from "@/components/shared/GridPostList";
 import Loader from "@/components/shared/Loader";
-import SearchResults from "@/components/shared/SearchResults";
+import SearchPostsResults from "@/components/shared/SearchPostsResults";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,7 +28,7 @@ const Explore = () => {
 
   useEffect(() => {
     if(inView && !searchValue) fetchNextPage();
-},[inView, searchValue])
+  },[inView, searchValue])
 
   if(!posts){
     return(
@@ -82,7 +82,7 @@ const Explore = () => {
           </div>
           <div className="flex flex-wrap gap-9 w-full max-w-5xl">
             {shouldShowSearchResults ? (
-              <SearchResults
+              <SearchPostsResults
               isSearchFetching={isSearchFetching}
               searchedPosts={searchedPosts}/>
             ) :

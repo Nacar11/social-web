@@ -433,3 +433,20 @@ export async function getUsers() {
   }
 }
 
+export async function searchUsers(searchTerm: string){
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [Query.startsWith("username", searchTerm)]
+    )
+    
+    if(!users) throw Error;
+    console.log(users)
+    return users;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
