@@ -30,3 +30,9 @@ export const PostValidation = z.object({
   location: z.string().min(2).max(100),
 
 })
+
+export const bioValidation = z.object({
+  bio: z.string().min(1).max(2200),
+
+
+})

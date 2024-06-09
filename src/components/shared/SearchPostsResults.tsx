@@ -10,7 +10,7 @@ const SearchPostsResults = ({isSearchFetching, searchedPosts}: SearchPostsResult
     if(isSearchFetching) 
     return (
           <section className="text-center h-[400px] w-full flex-center">
-            <Loader2 className="border border-black rounded-md mr-2 h-5 w-5 animate-spin" />
+            <Loader2 className="loader-black" />
           </section>
     )
           

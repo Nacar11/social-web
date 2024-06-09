@@ -15,7 +15,6 @@ import { useEffect, useState } from 'react';
 const EmailVerification = () => {
   const { toast } = useToast()
   const [seconds, setSeconds] = useState(60);
-  // let userId = ''
   const [userId, setUserId] = useState('');
   const [secret, setSecret] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
@@ -32,10 +31,7 @@ const EmailVerification = () => {
       setUserId(id)
       setSecret(urlParams.get('secret')!)
       setDialogVisible(true);
-      console.log(dialogVisible);
-      console.log(userId);
-      console.log(secret);
-        }
+      }
     }, []);
 
   useEffect(() => {

@@ -11,10 +11,14 @@ export const RightSideBar = () => {
   const [searchValue, setSearchValue] = useState('')
   const debouncedSearch = useDebounce(searchValue, 500);
   const { data: users, isPending } = useGetUsers();
-  const { data: searchedUsers, isFetching: isSearchFetching} = useSearchUsers(debouncedSearch)
-  const [usersData, setUsersData] = useState<Models.Document[]>([]);
-  
+  const { data: searchedUsers, isFetching: isSearchFetching} = useSearchUsers(debouncedSearch)  
 
+  // useEffect(() => {
+  //   if(users){
+  //     users.documents.sort(() => Math.random() - 0.5);
+  //   }
+  // },[]
+  // )
   const shouldShowSearchResults = searchValue !== '';
 
   return (
@@ -36,7 +40,7 @@ export const RightSideBar = () => {
           {isSearchFetching || isPending ? 
             (
               <div className="flex-center justify-center w-full h-full">
-                <Loader2 className="border border-black rounded-md mr-2 h-5 w-5 animate-spin" />
+                <Loader2 className="loader-black" />
               </div>
             )
             :

@@ -8,7 +8,7 @@ type UserFollowCardProps = {
 const UserFollowCard = ({user}: UserFollowCardProps) =>  {
   return (
     <div className="flex flex-col flex-center gap-1">
-     <Link to={`/profile/${user.id}`} 
+     <Link to={`/${user.username}`} 
            className='py-3'>
           <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'} 
             alt="profile"

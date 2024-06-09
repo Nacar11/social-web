@@ -6,9 +6,8 @@ import { INewPost, INewUser, IUpdatePost } from "./types";
 
 export async function createUserAccount(user: INewUser){
     try{
-
        const existingUser = await getUserByUsername(user.username);
-        if (existingUser.total !== 0) {
+        if (existingUser != null && existingUser.total !== 0) {
             throw new Error("Username is already taken");
         }
         const newAccount = await account.create(
@@ -59,16 +58,6 @@ export async function saveUserToDB(user:{
       }
 }
 
-async function getUserByUsername(username: string) {
-    const user = await databases.listDocuments(
-            appwriteConfig.databaseId,
-            appwriteConfig.userCollectionId,
-            [Query.equal('username', [username])]
-        );
-        console.log(user)
-        return user;
-}
-
 export async function signInAccount(user: {email: string; password: string}){
     try{
         const session  = await account.createEmailSession(user.email, user.password)
@@ -103,7 +92,7 @@ export async function getCurrentUser(){
         if(!currentUser) throw Error;
 
         return currentUser.documents[0];
-    }catch(e){
+    } catch(e){
         console.log(e);
     }
 }
@@ -273,10 +262,7 @@ export async function getPostById(postId: string){
         appwriteConfig.postCollectionId,
         postId
     )
-
     return post;
-  
-
   } catch (error) {
     console.log(error);
   }
@@ -325,6 +311,30 @@ export async function updatePost(post: IUpdatePost){
         }catch(e){
             console.log(e);
         }
+}
+
+export async function updateUserBio(bio: string){
+  try {
+    const existingUser = await getCurrentUser()
+    console.log(bio)
+    console.log(existingUser)
+
+    if (!existingUser) throw Error;
+      
+    // EDIT BIO OF USER
+    const updatedBio = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      existingUser.$id,
+      {
+        bio: bio
+      },
+    )
+    console.log(updatedBio)
+    return updatedBio;
+    }catch(e){
+      console.log(e);
+    }
 }
 
 export async function deletePost(postId: string, imageId: string){
@@ -414,6 +424,9 @@ export async function emailVerificationConfirm(credentials: {userId: string; sec
   }
 }
 
+
+//QUERY USERS
+
 export async function getUsers() {
   try {
     const users = await databases.listDocuments(
@@ -423,9 +436,9 @@ export async function getUsers() {
 
     if (!users) throw Error;
 
-     if (users.documents) {
-            users.documents.sort(() => Math.random() - 0.5);
-        }
+    //  if (users.documents) {
+    //         users.documents.sort(() => Math.random() - 0.5);
+    //     }
 
     return users;
   } catch (error) {
@@ -438,13 +451,34 @@ export async function searchUsers(searchTerm: string){
     const users = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.userCollectionId,
-      [Query.startsWith("username", searchTerm)]
+      [
+      Query.startsWith("username", searchTerm), 
+      // Query.startsWith("name", searchTerm)
+    ]
     )
     
     if(!users) throw Error;
-    console.log(users)
     return users;
     
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getUserByUsername(username: string) {
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      [
+      Query.equal("username", username)
+    ]
+    );
+    if (!users) throw Error;
+
+    const user = users.documents[0]; 
+
+    return user;
   } catch (error) {
     console.log(error);
   }

@@ -7,8 +7,8 @@ interface LoadingButtonProps {
 
 const LoadingButton: React.FC<LoadingButtonProps> = ({ children }) => {
   return (
-   <Button disabled className="shad-button_white">
-      <Loader2 className="border border-black rounded-md mr-2 h-4 w-4 animate-spin" />
+   <Button disabled className="bg-light-1 hover:bg-light-2 border border-black rounded-md">
+      <Loader2 className="loader-black" />
       {children ? children : "Please wait"}
     </Button>
   )

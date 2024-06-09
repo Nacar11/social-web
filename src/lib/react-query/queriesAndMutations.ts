@@ -9,6 +9,7 @@ import {
     getInfinitePosts,
     getPostById,
     getRecentPosts,
+    getUserByUsername,
     getUsers,
     likePost,
     savePost,
@@ -17,8 +18,10 @@ import {
     sendEmailVerification,
     signInAccount,
     signOutAccount,
-    updatePost
+    updatePost,
+    updateUserBio
 } from '../appwrite/api';
+
 import { INewPost, INewUser, IUpdatePost } from '../appwrite/types';
 import { QUERY_KEYS } from './queryKeys';
 
@@ -202,7 +205,7 @@ export const useSearchPosts = (searchTerm: string) => {
 }
 
 export const useGetUsers = () => {
- return useQuery({
+    return useQuery({
         queryKey: [QUERY_KEYS.GET_USERS],
         queryFn: getUsers
     })
@@ -216,3 +219,24 @@ export const useSearchUsers = (searchTerm: string) => {
 
     })
 }
+
+export const useGetUserByUsername = (username: string) => {
+    return useQuery({
+        queryKey: [QUERY_KEYS.GET_USER_BY_USERNAME],
+        queryFn: () => getUserByUsername(username),
+        enabled: !!username,
+  });
+};
+
+export const useUpdateUserBio = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+      mutationFn: (bio: string) => updateUserBio(bio),
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.GET_USER_BY_USERNAME]
+        })
+      }
+
+    })
+};

@@ -19,16 +19,18 @@ const PostCard = ({post}: PostCardProps) => {
     <div className="post-card">
         <div className="flex-between">
             <div className="flex items-center gap-3">
-                <Link to={`/profile/${post.creator.$id}`}>
+                <Link to={`/${post.creator.username}`}>
                     <img
                     src={post?.creator?.imageUrl || '/assets/icons/profile-placeholder.svg'}
                     alt="creator"
                     className="rounded-full border-2 border-primary-500 w-12 lg:h-12" />
                 </Link>
                 <div className="flex flex-col">
+                    <Link to={`/${post.creator.username}`}>
                     <p className="base-medium lg:body-bold text-dark-2">
                         {post.creator.name}
                     </p>
+                    </Link>
                     <div className="flex-center gap-2 text-light-3">
                         <p className="subtle-semibold lg:small-regular">
                             {formatDateString(post.$createdAt)}

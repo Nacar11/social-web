@@ -25,7 +25,7 @@ export const LeftSideBar = ({ disableNavigation }: { disableNavigation: boolean 
                className={`flex gap-3 items-center ${disableNavigation && 'cursor-not-allowed'}`}>
           <img src="/assets/images/logo_complete.png" alt="logo" width={170} height={36}/>
         </Link>
-        <Link to={ disableNavigation ? '/email-verification' : `/profile/${user.id}`} 
+        <Link to={ disableNavigation ? '/email-verification' : `/${user.username}`} 
               className={`flex gap-3 items-center  ${disableNavigation && 'cursor-not-allowed'}`}>
           <img src={user.imageUrl || '/assets/icons/profile-placeholder.svg'} 
             alt="profile"

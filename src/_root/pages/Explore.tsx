@@ -33,7 +33,7 @@ const Explore = () => {
   if(!posts){
     return(
       <div className="flex-center w-full h-hull">
-        <Loader2 className="border border-black rounded-md mr-2 h-5 w-5 animate-spin" />
+        <Loader2 className="loader-black" />
       </div>
     )
   }

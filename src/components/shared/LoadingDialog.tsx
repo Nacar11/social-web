@@ -15,7 +15,7 @@ const LoadingDialog = ({ isOpen }: { isOpen: boolean }) => {
       </DialogTrigger>
       <DialogContent>
           <div className="flex-center">
-            <Loader2 className="border border-black rounded-md mr-2 h-5 w-5 animate-spin" />
+            <Loader2 className="loader-black" />
           </div>
         <DialogHeader className="flex-center">
           <DialogTitle>Authenticating...</DialogTitle>
